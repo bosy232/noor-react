@@ -1,43 +1,43 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import Services from './pages/Services';
-import Doctors from './pages/Doctors';
-import International from './pages/International';
-import Contact from './pages/Contact';
-import About from './pages/About';
-import Insurance from './pages/Insurance';
-import PatientPortal from './pages/PatientPortal';
-import Privacy from './pages/Privacy';
-import Terms from './pages/Terms';
-import Sitemap from './pages/Sitemap';
+import React, { useEffect } from 'react';
+    import { useTranslation } from 'react-i18next';
+    import Navbar from './components/Navbar';
+    import Hero from './components/Hero';
+    import Services from './components/Services';
+    import Doctors from './components/Doctors';
+    import Departments from './components/Departments';
+    import Contact from './components/Contact';
+    import Footer from './components/Footer';
+    import Testimonials from './components/Testimonials';
+    import AboutUs from './components/AboutUs';
+    import CallToAction from './components/CallToAction';
+    import './i18n';
 
-function App() {
-  return (
-    <Router>
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/doctors" element={<Doctors />} />
-            <Route path="/international" element={<International />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/insurance" element={<Insurance />} />
-            <Route path="/patient-portal" element={<PatientPortal />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/sitemap" element={<Sitemap />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
-  );
-}
+    function App() {
+      const { i18n } = useTranslation();
+      const isArabic = i18n.language === 'ar';
 
-export default App
+      useEffect(() => {
+        // Set the initial direction for the entire document
+        document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+      }, [isArabic]);
+
+      return (
+        <div 
+          className={`min-h-screen bg-white ${isArabic ? 'font-arabic' : ''}`}
+          style={{ scrollBehavior: 'smooth' }}
+        >
+          <Navbar />
+          <Hero />
+          <Services />
+          <Departments />
+          <Doctors />
+          <Testimonials />
+          <AboutUs />
+          <CallToAction />
+          <Contact />
+          <Footer />
+        </div>
+      );
+    }
+
+    export default App;
